@@ -31,16 +31,16 @@ This project contains the `UpgradeableToken` smart contract, its deployment scri
 
 3. Ensure you have the following dependencies in your `foundry.toml`:
     ```toml
-[profile.default]
-src = "src"
-out = "out"
-libs = ["lib"]
-ffi = true
-ast = true
-build_info = true
-extra_output = ["storageLayout"]
-# See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
-```
+    [profile.default]
+    src = "src"
+    out = "out"
+    libs = ["lib"]
+    ffi = true
+    ast = true
+    build_info = true
+    extra_output = ["storageLayout"]
+    # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
+    ```
 
 ## Environment Variables
 
