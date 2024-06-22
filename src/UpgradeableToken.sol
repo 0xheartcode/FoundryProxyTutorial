@@ -4,10 +4,10 @@ import "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 
-contract MyUpgradeableToken is Initializable, ERC20Upgradeable, OwnableUpgradeable {
+contract UpgradeableToken is Initializable, ERC20Upgradeable, OwnableUpgradeable {
     
     function initialize() initializer public {
-        __ERC20_init("MyUpgradeableToken", "MUT");
+        __ERC20_init("UpgradeableToken", "MUT");
         _mint(msg.sender, 1000 * 10 ** decimals());
         __Ownable_init(msg.sender);
     }

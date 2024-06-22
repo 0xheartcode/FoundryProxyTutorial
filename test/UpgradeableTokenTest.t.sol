@@ -2,10 +2,10 @@ pragma solidity ^0.8.25;
 
 import {Test, console} from "forge-std/Test.sol";
 import {Upgrades} from "openzeppelin-foundry-upgrades/Upgrades.sol";
-import "../src/MyUpgradeableToken.sol"; // Adjust the path according to your project structure
+import "../src/UpgradeableToken.sol"; 
 
-contract MyUpgradeableTokenTest is Test {
-    MyUpgradeableToken public proxy;
+contract UpgradeableTokenTest is Test {
+    UpgradeableToken public proxy;
     address implementationAddress;
     address proxyAddress;
     address owner = address(1);
@@ -13,21 +13,21 @@ contract MyUpgradeableTokenTest is Test {
     function setUp() public {
         vm.prank(owner);
         address _proxyAddress = Upgrades.deployTransparentProxy(
-            "MyUpgradeableToken.sol",
+            "UpgradeableToken.sol",
             owner,
-            abi.encodeCall(MyUpgradeableToken.initialize)
+            abi.encodeCall(UpgradeableToken.initialize, ())
         );
 
         implementationAddress = Upgrades.getImplementationAddress(
             _proxyAddress
         );
         proxyAddress = _proxyAddress;
-        proxy = MyUpgradeableToken(proxyAddress);
+        proxy = UpgradeableToken(proxyAddress);
     }
 
     function testClaim() public {
         uint256 expectedBalance = 10 * 10 ** proxy.decimals();
-        uint256 initBalance = 1000000000 * 10 ** proxy.decimals();
+        uint256 initBalance = 1000 * 10 ** proxy.decimals(); 
         address claimer = address(2);
         vm.prank(claimer);
         proxy.claim();
@@ -39,7 +39,7 @@ contract MyUpgradeableTokenTest is Test {
         assertLt(
             proxy.balanceOf(owner),
             initBalance,
-            "Owner did not loose tokens during the claim"
+            "Owner did not lose tokens during the claim"
         );
     }
 }

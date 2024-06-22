@@ -1,66 +1,90 @@
-## Foundry
+# UpgradeableToken Project
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+This project contains the `UpgradeableToken` smart contract, its deployment script, and test cases. Below are the instructions on how to verify, deploy, and test the contract.
 
-Foundry consists of:
+## Prerequisites
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+- Node.js (v12.x or later)
+- Foundry
+- OpenZeppelin Contracts Upgradeable
+- OpenZeppelin Upgrades
 
-## Documentation
+## Installation
 
-https://book.getfoundry.sh/
+1. Install Foundry:
+    ```bash
+    curl -L https://foundry.paradigm.xyz | bash
+    foundryup
+    ```
 
-## Usage
+2. Clone the repository and install dependencies:
+    ```bash
+    git clone <repository_url>
+    cd <repository_name>
+    forge install
+    ```
+    Or install the following dependencies directly:
+    ```bash
+    forge install OpenZeppelin/openzeppelin-foundry-upgrades
+    forge install OpenZeppelin/openzeppelin-contracts-upgradeable
+    ```
 
-### Build
-
-```shell
-$ forge build
+3. Ensure you have the following dependencies in your `foundry.toml`:
+    ```toml
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+ffi = true
+ast = true
+build_info = true
+extra_output = ["storageLayout"]
+# See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
 ```
 
-### Test
+## Environment Variables
 
-```shell
-$ forge test
+Set the environment variables for your private key and RPC URL:
+Copy the `.env.local` file to `.env` and fill out the necessary details.
+
+## Compilation
+
+To compile the project, run:
+```bash
+forge build
 ```
 
-### Format
+## Testing
 
-```shell
-$ forge fmt
+To test the project, run:
+```bash
+forge test
 ```
 
-### Gas Snapshots
+## Deployment
 
-```shell
-$ forge snapshot
+To deploy the contract, follow these steps:
+
+1. Clean and rebuild the project (⚠️  use this in case of any issues. Clean && rebuild):
+    ```bash
+    forge clean
+    forge build
+    ```
+2. Deploying with Forge Script
+
+To deploy the contract using the Forge script, run:
+```bash
+forge script script/DeployUpgradeableToken.s.sol --rpc-url $RPC_URL --broadcast -vvvv
 ```
 
-### Anvil
-
-```shell
-$ anvil
+## Verification
+To verify the contract on Etherscan, use the following command:
+```bash
+forge verify-contract --rpc-url $RPC_URL --etherscan-api-key $ETHERSCAN_API_KEY $DEPLOYED_CONTRACT_ADDRESS src/UpgradeableToken.sol:UpgradeableToken
 ```
 
-### Deploy
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
+### Documentation and Credits
 
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+This project was inspired by and adapted from the following blog post:
+[Deploy Upgradeable Contract with Foundry and OpenZeppelin](https://www.proof2work.com/blog/deploy-upgradeable-contract-with-foundry-and-openzeppelin)
